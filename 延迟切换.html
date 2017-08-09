@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+				list-style:none;
+				font-size:12px;
+			}
+			.notice{
+				width:298px;
+				height:98px;
+				margin:10px;
+				border:1px solid #eee;
+				overflow:hidden;/*内容溢出修剪*/
+			}
+			.notice-tit{
+				height:27px;
+				position:relative;
+				
+			}
+			.notice-tit ul{
+				position:absolute;
+				width:301px;
+				left:-1px;
+			}
+			.notice-tit li{
+				float:left;
+				width:58px;
+				height:26px;
+				text-align:center;
+				line-height:26px;
+				overflow:hidden;/*内容溢出修剪*/
+				background:#fff;
+				padding:0 1px;
+				border-bottom:1px solid #eee;
+				background:#f7f7f7;
+			}
+			.notice-tit li.select{
+				background:#fff;
+				border-bottom-color:#fff;
+				border-left:1px solid #eee;
+				border-right:1px solid #eee;
+				padding:0;
+				font-weight:bolder;/*字体加粗*/
+			}
+			.notice-tit li a:link,.notice-tit li a:visited{
+				text-decoration:none;
+				color:#000;
+			}
+			.notice-tit li a:hover{
+				color:#f90;
+			}
+			.notice-con .mod{
+				margin:10px;
+				width:269px;
+				height:51px;
+				font-size:35px;
+				text-align:center;	
+					
+			}
+			
+		</style>
+		<script type="text/javascript">
+			function $(id){   
+				return typeof id==='string'?document.getElementById(id):id;	
+			}
+			window.onload=function(){
+				//标签索引
+				var index=0;
+				var timer=null;
+				
+				var lis=$('notice-tit').getElementsByTagName('li');
+				var divs=$('notice-con').getElementsByTagName('div');
+				
+				if(lis.length!=divs.length) return;
+				
+				//遍历所有的页签
+				for(var i=0; i<lis.length; i++){
+					lis[i].id=i;
+					lis[i].onmousemove=function(){
+						//用that这个变量来引用当前滑过的li，因为在定时器里用this的指向是window.
+						var that=this;
+						if(timer){
+							clearTimeout(timer);
+							timer=null;
+						}
+						//
+						timer=setTimeout(function(){
+						   for (var j=0; j<divs.length; j++) {
+							   lis[j].className='';
+							   divs[j].style.display='none';
+						    }
+						   that.className='select';
+						   divs[that.id].style.display='block';
+						},500);
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="notice" class="notice">
+			<div id="notice-tit" class="notice-tit">
+				<ul>
+					<li class="select"><a href="#">公告</a></li>
+					<li><a href="#">规则</a></li>
+					<li><a href="#">论坛</a></li>
+					<li><a href="#">安全</a></li>
+					<li><a href="#">公益</a></li>
+				</ul>
+			</div>
+			<div id="notice-con" class="notice-con">
+				<div class="mod">
+					div1
+				</div>
+				<div class="mod" style="display:none">
+					div2
+				</div>
+				<div class="mod" style="display:none">
+					div3
+				</div>
+				<div class="mod" style="display:none">
+					div4
+				</div>
+				<div class="mod" style="display:none">
+					div5
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
